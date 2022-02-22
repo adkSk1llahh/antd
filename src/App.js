@@ -11,12 +11,16 @@ import {
 import TableContent from "./Components/TableContent/TableContent.jsx";
 import { Layout, Menu } from "antd";
 import { UnorderedListOutlined, IdcardOutlined  } from "@ant-design/icons";
+import {useDispatch, useSelector} from "react-redux";
 const { Content, Footer, Sider } = Layout;
 
 function App() {
   const [data, setData] = useState({ columns: null, data: null });
 
   const [collapsed, setCollapse] = useState(false);
+
+  // const dispatch = useDispatch()
+  // const cash = useSelector(state=>state.cash)
 
   const onCollapsed = (collapsed) => {
     setCollapse(collapsed);

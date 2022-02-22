@@ -1,50 +1,52 @@
-import { Children, React, useState } from "react";
-import { Table } from "antd";
+import {Children, React, useState} from "react";
+import {Table} from "antd";
+import {PlusOutlined} from "@ant-design/icons";
 
-const { Column } = Table;
+const {Column} = Table;
 
-function TableContent({ info }) {
-  console.log(info);
+function TableContent({info}) {
 
-  return (
-    <>
-      <h1>Журнал</h1>
+    const dataSource = info.data && info.data.map((item) => {
+        return item
+    })
 
-      <Table dataSource={info.data && info.data}>
-        {info.columns &&
-          info.columns.map((item) => (
-            <Column
-              title={item.title === "fio" ? "ФИО ученика" : item.title}
-              key={item.key}
-              dataIndex={item.title}
+    const columns = info.columns && info.columns.map(item => {
+        const {title, key} = item
+        return {
+            title: title === "fio" ? 'ФИО ученика' : title,
+            key: key,
+            dataIndex: title === 'fio' ? title : key,
 
-              onCell={(record, rowIndex) => {
-                let {key, fio, ...obj} = info.data[rowIndex];
-                console.log(info.data[rowIndex])
-                let qq
-                Object.values(obj).map(item => !item.mark ? qq="qwe" : "asd")
-                return qq
-              }}
-            />
-          ))}
+            // render: (text, record, index) => {
+            //     // const {key, fio, ...obj} = record
+            //     // for (const [key, value] of Object.entries(obj)) {
+            //     //     return text ? text : value.marks.length > 0 ? "Оценка" : <PlusOutlined />
+            //     // }
+            //
+            //     return record ? text : 1234
+            //
+            // }
 
-        {/* {info.columns && (
-          <Column
-            title={
-              info.columns && info.columns.title === "fio"
-                ? "ФИО ученика"
-                : info.columns.title
+            // render: (item, text) => text ? text : Object.values(item).marks > 0 ? "qwe" : <PlusOutlined />
+            render: (item) => {
+                const items = []
+                if (typeof item === 'object') {
+                    items.push(item)
+                }
+                console.log(items)
             }
-            key={info.columns.key}
-            dataIndex={info.columns.title}
-            render={(text, record, index) => {
-              console.log(Object.keys(record));
-            }}
-          />
-        )} */}
-      </Table>
-    </>
-  );
+        }
+    })
+
+    // console.log(dataSource)
+    // console.log(columns)
+
+    return (
+        <>
+            <h1>Журнал</h1>
+            <Table dataSource={dataSource} columns={columns} pagination={false}/>
+        </>
+    );
 }
 
 export default TableContent;
