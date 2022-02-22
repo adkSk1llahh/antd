@@ -11,19 +11,29 @@ import {
 import TableContent from "./Components/TableContent/TableContent.jsx";
 import { Layout, Menu } from "antd";
 import { UnorderedListOutlined, IdcardOutlined  } from "@ant-design/icons";
-import {useDispatch, useSelector} from "react-redux";
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 function App() {
   const [data, setData] = useState({ columns: null, data: null });
 
   const [collapsed, setCollapse] = useState(false);
 
-  // const dispatch = useDispatch()
-  // const cash = useSelector(state=>state.cash)
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onCollapsed = (collapsed) => {
     setCollapse(collapsed);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   useEffect(() => {
@@ -35,7 +45,6 @@ function App() {
         const apiData = await axios.get(
           "https://beta.citorleu.kz/v1/common/data"
         );
-
         setData({ columns: apiColumns.data, data: apiData.data });
       } catch (error) {
         console.log(error);
@@ -63,7 +72,7 @@ function App() {
             <Content style={{ margin: "0 16px" }}>
               <Routes>
                 <Route path="/" element={<Navigate replace to="/journal" />} />
-                <Route path="/journal" element={<TableContent info={data}/>} />
+                <Route path="/journal" element={<TableContent info={data} handleOk={handleOk} handleCancel={handleCancel} showModal={showModal} isModalVisible={isModalVisible}/>} />
                 <Route path="/plans" element={<h1>Hello world!</h1>} />
               </Routes>
             </Content>

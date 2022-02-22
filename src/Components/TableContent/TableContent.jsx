@@ -1,52 +1,73 @@
-import {Children, React, useState} from "react";
-import {Table} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
+import { React, useState } from "react";
+import { Table } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import CustomModal from "../CustomModal/CustomModal.jsx";
 
-const {Column} = Table;
+function TableContent({
+  info,
+  showModal,
+  handleOk,
+  handleCancel,
+  isModalVisible,
+}) {
+  const dataSource =
+    info.data &&
+    info.data.map((item) => {
+      return item;
+    });
 
-function TableContent({info}) {
+  const columns =
+    info.columns &&
+    info.columns.map((item) => {
+      const { title, key } = item;
+      return {
+        title: title === "fio" ? "ФИО ученика" : title,
+        key: key,
+        dataIndex: title === "fio" ? title : key,
 
-    const dataSource = info.data && info.data.map((item) => {
-        return item
-    })
+        render: (item) => {
+          if (typeof item === "string") {
+            return item;
+          } else {
+            return (
+              <div onClick={showModal}>
+                {" "}
+                {item.marks && item.marks.length > 0 ? (
+                  item.marks[0].mark
+                ) : (
+                  <PlusOutlined />
+                )}{" "}
+              </div>
+            );
+          }
+        },
 
-    const columns = info.columns && info.columns.map(item => {
-        const {title, key} = item
-        return {
-            title: title === "fio" ? 'ФИО ученика' : title,
-            key: key,
-            dataIndex: title === 'fio' ? title : key,
+        // onCell: (data, index) => {
+        //   return {
+        //     onClick: (event) => {
+        //       console.log(data);
+        //     },
+        //   };
+        // },
+      };
+    });
 
-            // render: (text, record, index) => {
-            //     // const {key, fio, ...obj} = record
-            //     // for (const [key, value] of Object.entries(obj)) {
-            //     //     return text ? text : value.marks.length > 0 ? "Оценка" : <PlusOutlined />
-            //     // }
-            //
-            //     return record ? text : 1234
-            //
-            // }
+  return (
+    <>
+      <h1> Журнал </h1>
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        pagination={false}
 
-            // render: (item, text) => text ? text : Object.values(item).marks > 0 ? "qwe" : <PlusOutlined />
-            render: (item) => {
-                const items = []
-                if (typeof item === 'object') {
-                    items.push(item)
-                }
-                console.log(items)
-            }
-        }
-    })
-
-    // console.log(dataSource)
-    // console.log(columns)
-
-    return (
-        <>
-            <h1>Журнал</h1>
-            <Table dataSource={dataSource} columns={columns} pagination={false}/>
-        </>
-    );
+      />
+      <CustomModal
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        isModalVisible={isModalVisible}
+      />
+    </>
+  );
 }
 
 export default TableContent;
