@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/adkSk1llahh/antd/static/css/main.5b87e8fb.css",
+    "main.js": "/adkSk1llahh/antd/static/js/main.6b7bfa2b.js",
+    "index.html": "/adkSk1llahh/antd/index.html",
+    "main.5b87e8fb.css.map": "/adkSk1llahh/antd/static/css/main.5b87e8fb.css.map",
+    "main.6b7bfa2b.js.map": "/adkSk1llahh/antd/static/js/main.6b7bfa2b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5b87e8fb.css",
+    "static/js/main.6b7bfa2b.js"
+  ]
+}
