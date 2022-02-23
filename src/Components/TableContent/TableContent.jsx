@@ -61,7 +61,9 @@ function TableContent({
         fontWeight: "600",
         fontSize: "14px",
         lineHeight: "22px",
-        color: "rgba(0, 0, 0, 0.85)"
+        color: "rgba(0, 0, 0, 0.85)",
+        display: "block",
+        textAlign: "center"
     };
 
     const contentStyle = {
@@ -77,12 +79,12 @@ function TableContent({
         alignItems: "center",
         width: "34px",
         height: "34px",
-        cursor: "pointer"
+        cursor: "pointer",
+        color: "#1890FF"
     }
 
     return (
         <>
-
             <Table
                 dataSource={dataSource}
                 columns={columns}
