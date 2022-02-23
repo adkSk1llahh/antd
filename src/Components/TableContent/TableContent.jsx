@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { Table, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CustomModal from "../CustomModal/CustomModal.jsx";
 
@@ -10,7 +10,7 @@ function TableContent({
   handleCancel,
   isModalVisible,
   dataClick,
-  handleDeleteMark
+  handleDeleteMark,
 }) {
   const dataSource =
     info.data &&
@@ -88,16 +88,29 @@ function TableContent({
     color: "#1890FF",
   };
 
+  const spinStyle = {
+    position: 'absolute',
+    zIndex: 1,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  }
+
   return (
     <>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        title={() => {
-          return <span style={title}> Журнал </span>;
-        }}
-      />
+      {dataSource ? (
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          pagination={false}
+          title={() => {
+            return <span style={title}> Журнал </span>;
+          }}
+        />
+      ) : (
+        <Spin size="large" style={spinStyle}/>
+      )}
+
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}
