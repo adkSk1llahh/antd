@@ -20,12 +20,15 @@ function App() {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const [dataClick, setDataClick] = useState();
+
   const onCollapsed = (collapsed) => {
     setCollapse(collapsed);
   };
 
-  const showModal = () => {
+  const showModal = (item, record) => {
     setIsModalVisible(true);
+    setDataClick({item, record});
   };
 
   const handleOk = () => {
@@ -72,7 +75,7 @@ function App() {
             <Content style={{ margin: "0 16px" }}>
               <Routes>
                 <Route path="/" element={<Navigate replace to="/journal" />} />
-                <Route path="/journal" element={<TableContent info={data} handleOk={handleOk} handleCancel={handleCancel} showModal={showModal} isModalVisible={isModalVisible}/>} />
+                <Route path="/journal" element={<TableContent info={data} handleOk={handleOk} handleCancel={handleCancel} showModal={showModal} isModalVisible={isModalVisible} dataClick={dataClick}/>} />
                 <Route path="/plans" element={<h1>Hello world!</h1>} />
               </Routes>
             </Content>
