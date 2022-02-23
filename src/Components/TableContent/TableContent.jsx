@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import React from "react";
 import {Table} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import CustomModal from "../CustomModal/CustomModal.jsx";
@@ -10,7 +10,6 @@ function TableContent({
                           handleCancel,
                           isModalVisible,
                           dataClick,
-                          setDataClick
                       }) {
 
 
@@ -20,28 +19,27 @@ function TableContent({
             return item;
         });
 
-    // (event)=>handleDataClick(item, record)
-
     const columns =
         info.columns &&
         info.columns.map((item) => {
             const {title, key} = item;
             return {
-                title: title === "fio" ? "ФИО ученика" : title,
+                title: () => {
+                    return <span style={tableHeaderStyle}>{title === "fio" ? "ФИО ученика" : title}</span>
+                },
                 key: key,
                 dataIndex: title === "fio" ? title : key,
-
                 render: (item, record) => {
                     if (typeof item === "string") {
                         return item;
                     } else {
                         return (
                             <>
-                                <div onClick={(e) => showModal(item, record)}>
+                                <div onClick={(e) => showModal(item, record)} style={contentStyle}>
                                     {item.marks && item.marks.length > 0 ? (
-                                        item.marks[0].mark
+                                        <span style={iconStyle}>{item.marks[0].mark}</span>
                                     ) : (
-                                        <PlusOutlined/>
+                                        <PlusOutlined style={iconStyle}/>
                                     )}
                                 </div>
                             </>
@@ -52,14 +50,46 @@ function TableContent({
             };
         });
 
+    const title = {
+        fontWeight: "600",
+        fontSize: "16px",
+        lineHeight: "24px",
+        color: "rgba(0, 0, 0, 0.85)"
+    }
+
+    const tableHeaderStyle = {
+        fontWeight: "600",
+        fontSize: "14px",
+        lineHeight: "22px",
+        color: "rgba(0, 0, 0, 0.85)"
+    };
+
+    const contentStyle = {
+        display: "flex",
+        justifyContent: 'center',
+        width: "100%",
+        height: "100%"
+    }
+
+    const iconStyle = {
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: "center",
+        width: "34px",
+        height: "34px",
+        cursor: "pointer"
+    }
+
     return (
         <>
-            <h1> Журнал </h1>
+
             <Table
                 dataSource={dataSource}
                 columns={columns}
                 pagination={false}
-
+                title={() => {
+                    return <span style={title}> Журнал </span>
+                }}
             />
             <CustomModal
                 handleOk={handleOk}

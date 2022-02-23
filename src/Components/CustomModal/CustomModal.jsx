@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Modal, Button} from "antd";
+import React from "react";
+import {Modal} from "antd";
 
 function CustomModal({handleOk, handleCancel, isModalVisible, dataClick}) {
 
@@ -12,6 +12,7 @@ function CustomModal({handleOk, handleCancel, isModalVisible, dataClick}) {
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                maskStyle={{backgroundColor: '#002B60', opacity: 0.8}}
             >
                 <p>Дата: </p>
                 <p>Тема: </p>

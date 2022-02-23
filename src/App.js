@@ -72,7 +72,7 @@ function App() {
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            <Content style={{ margin: "0 16px" }}>
+            <Content style={{ margin: "24px", background: "#fff", padding: "24px" }}>
               <Routes>
                 <Route path="/" element={<Navigate replace to="/journal" />} />
                 <Route path="/journal" element={<TableContent info={data} handleOk={handleOk} handleCancel={handleCancel} showModal={showModal} isModalVisible={isModalVisible} dataClick={dataClick}/>} />
